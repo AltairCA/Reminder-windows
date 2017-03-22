@@ -68,5 +68,15 @@ namespace Reminder.Properties {
                 return ResourceManager.GetStream("Air_Horn_SoundBible_com_964603082", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
+        /// </summary>
+        public static System.Drawing.Icon favicon {
+            get {
+                object obj = ResourceManager.GetObject("favicon", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
     }
 }

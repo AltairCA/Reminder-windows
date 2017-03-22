@@ -11,30 +11,40 @@ using System.Windows.Forms;
 
 namespace Reminder
 {
-    public partial class Form1 : Form
+    public partial class MainWindow : Form
     {
         SoundPlayerController player = null;
        
-        public Form1()
+        public MainWindow()
         {
             InitializeComponent();
             player = new SoundPlayerController();
-            trackBar1.Value = player.getPlayerVolume();
-           
+            VolumeController.Value = player.getPlayerVolume();
+            mynotifyicon.BalloonTipText = "Reminder still working...";
+            mynotifyicon.BalloonTipTitle = "Reminder";
+            mynotifyicon.Text = "Reminder";
+            mynotifyicon.BalloonTipIcon = ToolTipIcon.Info;
+            mynotifyicon.DoubleClick += Mynotifyicon_DoubleClick; ;
+            mynotifyicon.Icon = Reminder.Properties.Resources.favicon;
+
         }
 
+        private void Mynotifyicon_DoubleClick(object sender, EventArgs e)
+        {
+            this.Show();
+        }
         private void button1_Click(object sender, EventArgs e)
         {
             int seconds = 0;
             int minutes = 0;
            
-            if (textBox1.Text != "")
+            if (minutesText.Text != "")
             {
-                minutes = System.Convert.ToInt32(textBox1.Text);
+                minutes = System.Convert.ToInt32(minutesText.Text);
             }
-            if (textBox2.Text != "")
+            if (secondsText.Text != "")
             {
-                seconds = System.Convert.ToInt32(textBox2.Text);
+                seconds = System.Convert.ToInt32(secondsText.Text);
             }
             if(seconds != 0 && minutes != 0)
             {
@@ -56,14 +66,14 @@ namespace Reminder
         {
             try
             {
-                if(textBox1.Text != "")
+                if(minutesText.Text != "")
                 {
-                    int temp = System.Convert.ToInt32(textBox1.Text);
+                    int temp = System.Convert.ToInt32(minutesText.Text);
                 }
                 
             }catch(Exception ex)
             {
-                textBox1.Text = "";
+                minutesText.Text = "";
                 MessageBox.Show("Enter Numbers Only");
             }
         }
@@ -72,15 +82,15 @@ namespace Reminder
         {
             try
             {
-                if(textBox2.Text != "")
+                if(secondsText.Text != "")
                 {
-                    int temp = System.Convert.ToInt32(textBox2.Text);
+                    int temp = System.Convert.ToInt32(secondsText.Text);
                 }
                 
             }
             catch (Exception ex)
             {
-                textBox2.Text = "";
+                secondsText.Text = "";
                 MessageBox.Show("Enter Numbers Only");
             }
         }
@@ -89,7 +99,7 @@ namespace Reminder
         {
             if(player != null)
             {
-                player.setPlayerVolume(trackBar1.Value);
+                player.setPlayerVolume(VolumeController.Value);
             }
         }
 
@@ -97,9 +107,6 @@ namespace Reminder
         {
             if(player != null)
             {
-               
-                timeSeconds = 0;
-               
                 player.stopTimer();
             }
         }
@@ -109,6 +116,20 @@ namespace Reminder
             if (player != null)
             {
                 player.stopAlram();
+            }
+        }
+
+        private void Form1_Resize(object sender, EventArgs e)
+        {
+            if (FormWindowState.Minimized == this.WindowState)
+            {
+                mynotifyicon.Visible = true;
+                mynotifyicon.ShowBalloonTip(500);
+                this.Hide();
+            }
+            else if (FormWindowState.Normal == this.WindowState)
+            {
+                mynotifyicon.Visible = false;
             }
         }
     }
