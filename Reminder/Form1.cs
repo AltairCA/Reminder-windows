@@ -14,11 +14,13 @@ namespace Reminder
     public partial class Form1 : Form
     {
         SoundPlayerController player = null;
+       
         public Form1()
         {
             InitializeComponent();
             player = new SoundPlayerController();
             trackBar1.Value = player.getPlayerVolume();
+           
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -34,9 +36,16 @@ namespace Reminder
             {
                 seconds = System.Convert.ToInt32(textBox2.Text);
             }
+            if(seconds != 0 && minutes != 0)
+            {
+                player.setTimeIntervale(minutes, seconds);
+                player.startTimer();
+               
+            }
+            
+           
 
-            player.setTimeIntervale(minutes, seconds);
-            player.startTimer();
+
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -88,6 +97,9 @@ namespace Reminder
         {
             if(player != null)
             {
+               
+                timeSeconds = 0;
+               
                 player.stopTimer();
             }
         }
