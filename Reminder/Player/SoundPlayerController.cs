@@ -15,7 +15,7 @@ namespace Reminder.Player
         [DllImport("winmm.dll")]
         public static extern int waveOutSetVolume(IntPtr hwo, uint dwVolume);
 
-        System.Timers.Timer timer;
+        private System.Timers.Timer timer;
         System.Media.SoundPlayer player = new System.Media.SoundPlayer(Reminder.Properties.Resources.Air_Horn_SoundBible_com_964603082);
         public SoundPlayerController(int minutes,int seconds)
         {
@@ -26,16 +26,27 @@ namespace Reminder.Player
             
         
         }
+        public SoundPlayerController()
+        {
+            timer = new System.Timers.Timer();
+            timer.AutoReset = true;
+            timer.Elapsed += PlaySound;
+        }
+        public void setTimeIntervale(int minutes,int seconds)
+        {
+            double milisecods = (minutes * 60 * 1000) + seconds * 1000;
+            timer.Interval = milisecods;
+
+        }
         private void PlaySound(Object source, System.Timers.ElapsedEventArgs e)
         {
             player.PlayLooping();
         }
         public void stopTimer()
         {
+            timer.Enabled = false;
             player.Stop();
-            timer.Stop();
-            
-            
+            timer.Stop();            
         }
         public void stopAlram()
         {
@@ -43,13 +54,18 @@ namespace Reminder.Player
         }
         public void startTimer()
         {
+            timer.Enabled = false;
+            timer.Stop();
+
             timer.Start();
+            timer.Enabled = true;
         }
         public void startTimer(int minutes,int seconds)
         {
             double milisecods = (minutes * 60 * 1000) + seconds * 1000;
             timer.Interval = milisecods;
             timer.Start();
+            
         }
         public void setPlayerVolume(int value)
         {
