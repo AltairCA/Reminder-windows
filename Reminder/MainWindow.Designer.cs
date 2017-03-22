@@ -93,6 +93,7 @@
             this.VolumeController.AutoSize = false;
             this.VolumeController.Location = new System.Drawing.Point(173, 19);
             this.VolumeController.Name = "VolumeController";
+            this.VolumeController.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.VolumeController.Size = new System.Drawing.Size(104, 25);
             this.VolumeController.TabIndex = 5;
             this.VolumeController.TickStyle = System.Windows.Forms.TickStyle.None;
