@@ -46,11 +46,14 @@ namespace Reminder
             {
                 seconds = System.Convert.ToInt32(secondsText.Text);
             }
-            if(seconds != 0 && minutes != 0)
+            if(seconds != 0 || minutes != 0)
             {
                 player.setTimeIntervale(minutes, seconds);
                 player.startTimer();
-               
+                StartTimerBtn.Enabled = false;
+                secondsText.Enabled = false;
+                minutesText.Enabled = false;
+                StopTimerBtn.Enabled = true;
             }
             
            
@@ -108,6 +111,10 @@ namespace Reminder
             if(player != null)
             {
                 player.stopTimer();
+                StartTimerBtn.Enabled = true;
+                secondsText.Enabled = true;
+                minutesText.Enabled = true;
+                StopTimerBtn.Enabled = false;
             }
         }
 
